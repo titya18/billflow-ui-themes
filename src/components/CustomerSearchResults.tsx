@@ -1,6 +1,8 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -9,149 +11,212 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
+import { Eye, Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
-const customers = [
+const mockCustomers = [
   {
     id: 1,
     custId: 13,
-    name: 'Cambodia Vietnam Securities PLC',
+    custName: 'Cambodia Vietnam Securities PLC',
     accId: 34,
     accName: 'cvs.com.kh',
     status: 'Active',
     service: 'Webhosting',
-    phone: '097923678/088889364/097666060',
+    phone: '097534575940/085686834/067665050'
   },
   {
     id: 2,
     custId: 311,
-    name: 'Sok SoKha Co. Ltd ()',
-    accId: 489,
+    custName: 'Sok Sokha Co, Ltd (1)',
+    accId: 4891,
     accName: 'soksokha.com',
     status: 'Closed',
     service: 'Webhosting',
-    phone: '',
+    phone: ''
   },
   {
     id: 3,
-    custId: 1629,
-    name: 'HEINEKEN (CAMBODIA) CO., LTD.',
-    accId: 2029,
-    accName: 'cbl.com.kh',
+    custId: 8026,
+    custName: 'HENIKEN (CAMBODIA) CO., LTD.',
+    accId: 2022,
+    accName: 'cbrl.com.kh',
     status: 'Active',
     service: 'Webhosting',
-    phone: '023722683',
+    phone: '023720853'
   },
   {
     id: 4,
-    custId: 1785,
-    name: 'sfsfsdfdsf',
+    custId: 17635,
+    custName: 'stdhsdfsf',
     accId: 2162,
-    accName: 'scsffsag',
+    accName: 'scolfag',
     status: 'Active',
-    service: 'WebhostingPremium50MB',
-    phone: 'sfsfsdfdsf',
+    service: 'WebhostingPremium80MB',
+    phone: 'stdhsdfsf'
   },
   {
     id: 5,
-    custId: 1753,
-    name: 'dfdsff',
+    custId: 17534,
+    custName: 'dfsdfsf',
     accId: 2147,
-    accName: 'sdffsdf',
+    accName: 'sdfhsdf',
     status: 'Inactive',
     service: 'StandardWebhosting',
-    phone: 'dfsfddsf',
+    phone: 'dfsdfsf'
   },
+  {
+    id: 6,
+    custId: 181,
+    custName: 'Citylink Swim Recap Testing',
+    accId: 376,
+    accName: 'streetknight@citylink',
+    status: 'Active',
+    service: '',
+    phone: ''
+  },
+  {
+    id: 7,
+    custId: 214,
+    custName: 'EXCO CONCRETE CO LTD',
+    accId: 351,
+    accName: 'exco_regular',
+    status: 'Closed',
+    service: 'Corporate Standard 1Mbps',
+    phone: '017574765'
+  },
+  {
+    id: 8,
+    custId: 321,
+    custName: 'AJE Japan',
+    accId: 508,
+    accName: 'ajer_regular',
+    status: 'Closed',
+    service: 'Corporate Standard 2Mbps',
+    phone: '016862562'
+  }
 ];
 
+const getStatusColor = (status: string) => {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+    case 'closed':
+      return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
+    case 'inactive':
+      return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300';
+    default:
+      return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
+  }
+};
+
 export function CustomerSearchResults() {
+  const [showEntries, setShowEntries] = useState(10);
+
   return (
     <Card className="animate-fade-in">
       <CardHeader>
-        <CardTitle>Search Results</CardTitle>
+        <CardTitle className="flex items-center justify-between">
+          <span>Search Results</span>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <span>Show</span>
+            <select 
+              value={showEntries} 
+              onChange={(e) => setShowEntries(Number(e.target.value))}
+              className="border border-gray-300 rounded px-2 py-1 bg-background"
+            >
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+            <span>entries</span>
+          </div>
+        </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Show</span>
-            <select className="border rounded px-2 py-1 text-sm">
-              <option>10</option>
-              <option>25</option>
-              <option>50</option>
-            </select>
-            <span className="text-sm text-muted-foreground">entries</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Search:</span>
-            <input 
-              type="text" 
-              className="border rounded px-2 py-1 text-sm w-32"
-              placeholder="Filter..."
-            />
-          </div>
-        </div>
-
-        <div className="rounded-md border overflow-hidden">
+        <div className="rounded-md border">
           <Table>
             <TableHeader>
-              <TableRow className="bg-muted/50">
-                <TableHead className="font-semibold">No.</TableHead>
-                <TableHead className="font-semibold">Cust. ID</TableHead>
-                <TableHead className="font-semibold">Cust. Names</TableHead>
-                <TableHead className="font-semibold">Acc. ID</TableHead>
-                <TableHead className="font-semibold">Acc. Name</TableHead>
-                <TableHead className="font-semibold">Status</TableHead>
-                <TableHead className="font-semibold">Service</TableHead>
-                <TableHead className="font-semibold">Phone</TableHead>
+              <TableRow className="bg-blue-50 dark:bg-blue-950">
+                <TableHead className="w-12">No.</TableHead>
+                <TableHead>Cust. ID</TableHead>
+                <TableHead>Cust. Names</TableHead>
+                <TableHead>Acc. ID</TableHead>
+                <TableHead>Acc. Name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Service</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead className="w-20">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customers.map((customer, index) => (
-                <TableRow key={customer.id} className="hover:bg-muted/30 cursor-pointer">
+              {mockCustomers.slice(0, showEntries).map((customer, index) => (
+                <TableRow key={customer.id} className="hover:bg-muted/50">
                   <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>
-                    <Button variant="link" className="p-0 h-auto text-blue-600">
-                      {customer.custId}
-                    </Button>
+                  <TableCell className="text-blue-600 font-medium">{customer.custId}</TableCell>
+                  <TableCell className="text-blue-600 hover:underline cursor-pointer">
+                    {customer.custName}
                   </TableCell>
-                  <TableCell>{customer.name}</TableCell>
-                  <TableCell>
-                    <Button variant="link" className="p-0 h-auto text-blue-600">
-                      {customer.accId}
-                    </Button>
+                  <TableCell className="text-blue-600">{customer.accId}</TableCell>
+                  <TableCell className="text-blue-600 hover:underline cursor-pointer">
+                    {customer.accName}
                   </TableCell>
                   <TableCell>
-                    <Button variant="link" className="p-0 h-auto text-blue-600">
-                      {customer.accName}
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Badge 
-                      className={`status-badge ${
-                        customer.status === 'Active' ? 'status-active' :
-                        customer.status === 'Closed' ? 'status-closed' :
-                        customer.status === 'Inactive' ? 'status-inactive' :
-                        'status-suspended'
-                      }`}
-                    >
+                    <Badge className={getStatusColor(customer.status)}>
                       {customer.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>{customer.service}</TableCell>
+                  <TableCell className="text-sm">{customer.service}</TableCell>
                   <TableCell className="text-sm">{customer.phone}</TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800 border shadow-lg">
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <Eye className="mr-2 h-4 w-4" />
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <Edit className="mr-2 h-4 w-4" />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600">
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
-
+        
+        {/* Pagination */}
         <div className="flex items-center justify-between mt-4">
-          <span className="text-sm text-muted-foreground">
-            Showing 1 to 5 of 5 entries
-          </span>
-          <div className="flex gap-1">
+          <div className="text-sm text-muted-foreground">
+            Showing 1 to {Math.min(showEntries, mockCustomers.length)} of {mockCustomers.length} entries
+          </div>
+          <div className="flex items-center space-x-2">
             <Button variant="outline" size="sm" disabled>
+              Previous
+            </Button>
+            <Button variant="outline" size="sm" className="bg-blue-600 text-white">
               1
+            </Button>
+            <Button variant="outline" size="sm" disabled>
+              Next
             </Button>
           </div>
         </div>
