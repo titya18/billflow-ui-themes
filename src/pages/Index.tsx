@@ -27,9 +27,15 @@ const Index = () => {
               Billing Administration
             </Button>
           </Link>
+          
+          <Link to="/reports">
+            <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3 text-lg">
+              Reports Dashboard
+            </Button>
+          </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-6xl mx-auto">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
             <h3 className="font-semibold text-lg mb-2">Modern Dashboard</h3>
             <p className="text-gray-600 dark:text-gray-400">
@@ -41,6 +47,13 @@ const Index = () => {
             <h3 className="font-semibold text-lg mb-2">Billing Administration</h3>
             <p className="text-gray-600 dark:text-gray-400">
               Complete billing management, customer search, invoice handling, and financial reporting.
+            </p>
+          </div>
+          
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h3 className="font-semibold text-lg mb-2">Reports Dashboard</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Comprehensive reporting system with organized categories and detailed analytics.
             </p>
           </div>
         </div>
