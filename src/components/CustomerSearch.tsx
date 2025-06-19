@@ -84,7 +84,7 @@ export function CustomerSearch() {
         </CardContent>
       </Card>
 
-      {showResults && <CustomerSearchResults searchTerm={searchValue} />}
+      {showResults && <CustomerSearchResults />}
     </div>
   );
 }

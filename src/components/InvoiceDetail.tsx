@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Mail, Print, Eye } from 'lucide-react';
+import { Download, Mail, Printer, Eye } from 'lucide-react';
 
 interface InvoiceDetailProps {
   invoiceData: {
@@ -59,7 +58,7 @@ export function InvoiceDetail({ invoiceData }: InvoiceDetailProps) {
                 Send
               </Button>
               <Button variant="secondary" size="sm">
-                <Print className="h-4 w-4 mr-2" />
+                <Printer className="h-4 w-4 mr-2" />
                 Print
               </Button>
             </div>
