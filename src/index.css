@@ -119,14 +119,19 @@
   }
 }
 
-/* Custom sidebar width override - force 320px */
+/* Custom sidebar positioning and sizing */
 :root {
-  --sidebar-width: 20rem;
+  --sidebar-width: 320px;
 }
 
-/* Force sidebar to maintain its width and prevent overlap */
-[data-sidebar="sidebar"] {
+/* Dashboard sidebar specific positioning */
+.dashboard-sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
   width: 320px !important;
   min-width: 320px !important;
   max-width: 320px !important;
+  height: 100vh !important;
+  z-index: 50 !important;
 }

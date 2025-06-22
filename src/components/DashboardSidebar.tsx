@@ -174,9 +174,9 @@ export function DashboardSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-sidebar-border bg-slate-50 dark:bg-slate-900" style={{ width: '320px', minWidth: '320px' }}>
-      <SidebarHeader className="border-b border-sidebar-border p-4">
-        <div className="flex items-center justify-between">
+    <Sidebar className="border-r border-sidebar-border bg-slate-50 dark:bg-slate-900 fixed left-0 top-0 h-screen z-50" style={{ width: '320px', minWidth: '320px' }}>
+      <SidebarHeader className="border-b border-sidebar-border p-4 bg-slate-50 dark:bg-slate-900">
+        <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">CL</span>
@@ -190,9 +190,10 @@ export function DashboardSidebar() {
             variant="ghost"
             size="sm"
             onClick={toggleFullscreen}
-            className="h-8 w-8 p-0 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center"
+            className="h-8 w-8 p-0 hover:bg-slate-200 dark:hover:bg-slate-700 flex-shrink-0 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600"
+            title="Toggle Fullscreen"
           >
-            <Maximize className="h-4 w-4" />
+            <Maximize className="h-4 w-4 text-slate-700 dark:text-slate-300" />
           </Button>
         </div>
       </SidebarHeader>
