@@ -10,9 +10,9 @@ const Dashboard = () => {
       <SidebarProvider>
         <div className="min-h-screen flex w-full bg-background">
           <DashboardSidebar />
-          <div className="flex-1 overflow-auto">
+          <main className="flex-1 min-w-0 overflow-auto" style={{ marginLeft: '0' }}>
             <DashboardContent />
-          </div>
+          </main>
         </div>
       </SidebarProvider>
     </ThemeProvider>

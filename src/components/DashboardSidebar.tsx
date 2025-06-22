@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import {
   Search,
@@ -29,7 +30,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -174,7 +174,7 @@ export function DashboardSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-sidebar-border bg-slate-50 dark:bg-slate-900 w-80" style={{ width: '320px' }}>
+    <Sidebar className="border-r border-sidebar-border bg-slate-50 dark:bg-slate-900" style={{ width: '320px', minWidth: '320px' }}>
       <SidebarHeader className="border-b border-sidebar-border p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -190,7 +190,7 @@ export function DashboardSidebar() {
             variant="ghost"
             size="sm"
             onClick={toggleFullscreen}
-            className="h-8 w-8 p-0 hover:bg-slate-200 dark:hover:bg-slate-700"
+            className="h-8 w-8 p-0 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center"
           >
             <Maximize className="h-4 w-4" />
           </Button>
