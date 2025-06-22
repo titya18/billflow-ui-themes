@@ -23,6 +23,7 @@ import {
   Eye,
   ChevronDown,
   ChevronRight,
+  Maximize,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -43,6 +44,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { Button } from '@/components/ui/button';
 
 const menuItems = [
   {
@@ -152,7 +154,7 @@ const menuItems = [
 ];
 
 export function DashboardSidebar() {
-  const [openItems, setOpenItems] = useState<string[]>([]);
+  const [openItems, setOpenItems] = useState<string[]>(['Search']);
 
   const toggleItem = (title: string) => {
     setOpenItems(prev =>
@@ -162,32 +164,49 @@ export function DashboardSidebar() {
     );
   };
 
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   return (
-    <Sidebar className="border-r">
-      <SidebarHeader className="p-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">CL</span>
+    <Sidebar className="border-r border-sidebar-border bg-slate-50 dark:bg-slate-900 w-80" style={{ width: '320px' }}>
+      <SidebarHeader className="border-b border-sidebar-border p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">CL</span>
+            </div>
+            <div>
+              <h2 className="font-bold text-lg text-foreground">CityLink</h2>
+              <p className="text-xs text-muted-foreground">Admin Dashboard</p>
+            </div>
           </div>
-          <div>
-            <h2 className="font-bold text-lg">CityLink</h2>
-            <p className="text-xs text-muted-foreground">Admin Dashboard</p>
-          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleFullscreen}
+            className="h-8 w-8 p-0 hover:bg-slate-200 dark:hover:bg-slate-700"
+          >
+            <Maximize className="h-4 w-4" />
+          </Button>
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="bg-slate-50 dark:bg-slate-900">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
-                <Collapsible key={item.title}>
+                <Collapsible key={item.title} open={openItems.includes(item.title)} onOpenChange={() => toggleItem(item.title)}>
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
-                      <SidebarMenuButton
-                        onClick={() => toggleItem(item.title)}
-                        className="w-full"
-                      >
+                      <SidebarMenuButton className="w-full hover:bg-slate-200 dark:hover:bg-slate-700 text-foreground">
                         <item.icon className="h-4 w-4" />
                         <span>{item.title}</span>
                         {openItems.includes(item.title) ? (
@@ -202,7 +221,7 @@ export function DashboardSidebar() {
                         {item.items.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
-                              <a href="#" className="flex items-center gap-2">
+                              <a href="#" className="flex items-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 text-foreground">
                                 <subItem.icon className="h-3 w-3" />
                                 <span className="text-sm">{subItem.title}</span>
                               </a>

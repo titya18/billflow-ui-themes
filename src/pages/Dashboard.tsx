@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { DashboardSidebar } from '@/components/DashboardSidebar';
 import { DashboardContent } from '@/components/DashboardContent';
